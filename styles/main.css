@@ -53,29 +53,30 @@ h3 {
     color: var(--text-color);
 }
 
-.calculator__screen > .container {
+.calculator__screen--text-container {
     position: relative;
-}
-.calculator__screen--text {
+    height: 150px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    height: 150px;
     box-sizing: border-box;
-    padding-right: 1em;
+    padding-right: 2em;
+    padding-top: 1em;
+    margin-bottom: 1em;
     background-color: var(--screen-background);
     color: var(--text-color);
     border-radius: 10px;
     text-align: right;
+}
+.calculator__screen--text {
     font-size: 40px;
-    margin-bottom: 1em;
 }
 .calculator__screen--overhead-text {
     position: absolute;
+    top: 20px;
+    right: 40px;
     color: var(--text-color-second);
     font-size: 30px;
-    top: 10px;
-    right: 50px;
 }
 
 .calculator__keypad {
@@ -89,14 +90,15 @@ h3 {
 }
 
 .calculator__key {
-    display: grid;
-    place-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 70px;
     background-color: var(--key-background);
-    font-size: 32px;
     color: var(--text-color-second);
     border-radius: 10px;
     box-shadow: 0 5px 0 var(--key-shadow);
+    font-size: 32px;
     cursor: pointer;
 }
 .calculator__key:hover {

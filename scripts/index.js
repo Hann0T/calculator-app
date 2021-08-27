@@ -52,8 +52,8 @@ keyEquals.addEventListener("click", () => {
     screenValues.nextValue = parseFloat(screen.textContent);
     overheadScreen.textContent += screen.textContent + "=";
     let { prevValue, nextValue, operationToDo } = screenValues;
-    const operator = matchOperator(operationToDo);
-    screen.textContent = operator(prevValue, nextValue);
+    const doTheOperation = matchOperator(operationToDo);
+    screen.textContent = doTheOperation(prevValue, nextValue);
 });
 
 function matchOperator(operator) {
