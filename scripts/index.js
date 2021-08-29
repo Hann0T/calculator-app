@@ -1,3 +1,5 @@
+const app = document.querySelector(".app");
+const themeSwitcher = document.querySelector("#switcher");
 const keyNumbers = document.querySelectorAll("#key__number");
 const keyOperations = document.querySelectorAll(".calculator__key--operator");
 const keyDelete = document.querySelector(".calculator__key--delete");
@@ -12,6 +14,26 @@ const screenValues = {
     nextValue: 0,
     operationToDo: "",
 };
+
+themeSwitcher.addEventListener("change", () => {
+    let value = parseInt(themeSwitcher.value);
+    switch (value) {
+        case 1: {
+            themeSwitcher.dataset.theme = "theme-one";
+            changeTheme(themeSwitcher.dataset.theme);
+            break;
+        }
+        case 2: {
+            themeSwitcher.dataset.theme = "theme-two";
+            changeTheme(themeSwitcher.dataset.theme);
+            break;
+        }
+        default: {
+            themeSwitcher.dataset.theme = "theme-three";
+            changeTheme(themeSwitcher.dataset.theme);
+        }
+    }
+});
 
 keyNumbers.forEach(function (key) {
     key.addEventListener("click", () => {
@@ -42,8 +64,8 @@ keyDot.addEventListener("click", () => {
 keyOperations.forEach((key) => {
     key.addEventListener("click", () => {
         screenValues.prevValue = parseFloat(screen.textContent);
-        screenValues.operationToDo = key.textContent.toLowerCase();
-        overheadScreen.textContent = `${screen.textContent}${key.textContent}`;
+        screenValues.operationToDo = key.dataset.operator;
+        overheadScreen.textContent = `${screen.textContent}${key.dataset.operator}`;
         screen.textContent = 0;
     });
 });
@@ -73,10 +95,16 @@ function matchOperator(operator) {
                 return a * b;
             };
         }
-        case "/": {
+        default: {
             return (a, b) => {
                 return a / b;
             };
         }
     }
+}
+
+function changeTheme(theme) {
+    app.removeAttribute("class");
+    app.classList.add("app");
+    app.classList.add(theme);
 }
