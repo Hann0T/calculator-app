@@ -1,19 +1,52 @@
+import Calculator from "./calculator.js";
+
 const app = document.querySelector(".app");
 const themeSwitcher = document.querySelector("#switcher");
-const keyNumbers = document.querySelectorAll("#key__number");
-const keyOperations = document.querySelectorAll(".calculator__key--operator");
-const keyDelete = document.querySelector(".calculator__key--delete");
-const keyEquals = document.querySelector(".calculator__key--equal");
-const keyReset = document.querySelector(".calculator__key--reset");
-const keyDot = document.querySelector(".calculator__key--dot");
+
 const screen = document.querySelector(".calculator__screen--text");
 const overheadScreen = screen.previousElementSibling;
+const keyNumbers = document.querySelectorAll("#key__number");
+const keyDelete = document.querySelector(".calculator__key--delete");
+const keyReset = document.querySelector(".calculator__key--reset");
+const keyDot = document.querySelector(".calculator__key--dot");
+const keyOperations = document.querySelectorAll(".calculator__key--operator");
+const keyEquals = document.querySelector(".calculator__key--equal");
 
-const screenValues = {
-    prevValue: 0,
-    nextValue: 0,
-    operationToDo: "",
-};
+const calculator = new Calculator(screen, overheadScreen);
+
+keyNumbers.forEach(function (key) {
+    key.addEventListener("click", () => {
+        calculator.displayInScreen(key.textContent);
+    });
+});
+keyReset.addEventListener("click", () => {
+    calculator.clear();
+});
+keyDelete.addEventListener("click", () => {
+    calculator.deleteNumber();
+});
+keyDot.addEventListener("click", () => {
+    calculator.displayInScreen(keyDot.textContent);
+});
+keyOperations.forEach((key) => {
+    key.addEventListener("click", () => {
+        calculator.state = {
+            ...calculator.state,
+            firstNumber: parseFloat(screen.textContent),
+            operator: key.textContent,
+        };
+        calculator.displayInTopScreen(
+            `${calculator.state.firstNumber}${calculator.state.operator}`
+        );
+    });
+});
+keyEquals.addEventListener("click", () => {
+    calculator.state = {
+        ...calculator.state,
+        secondNumber: parseFloat(screen.textContent),
+    };
+    calculator.calculate();
+});
 
 themeSwitcher.addEventListener("change", () => {
     let value = parseInt(themeSwitcher.value);
@@ -34,75 +67,6 @@ themeSwitcher.addEventListener("change", () => {
         }
     }
 });
-
-keyNumbers.forEach(function (key) {
-    key.addEventListener("click", () => {
-        if (parseInt(screen.textContent) === 0) {
-            return (screen.textContent = key.firstChild.textContent);
-        }
-        screen.textContent += key.firstChild.textContent;
-    });
-});
-
-keyDelete.addEventListener("click", () => {
-    if (screen.textContent.length === 1) {
-        return (screen.textContent = 0);
-    }
-
-    screen.textContent = screen.textContent.slice(0, -1);
-});
-
-keyReset.addEventListener("click", () => {
-    screen.textContent = 0;
-    overheadScreen.textContent = "";
-});
-
-keyDot.addEventListener("click", () => {
-    screen.textContent += ".";
-});
-
-keyOperations.forEach((key) => {
-    key.addEventListener("click", () => {
-        screenValues.prevValue = parseFloat(screen.textContent);
-        screenValues.operationToDo = key.dataset.operator;
-        overheadScreen.textContent = `${screen.textContent}${key.dataset.operator}`;
-        screen.textContent = 0;
-    });
-});
-
-keyEquals.addEventListener("click", () => {
-    screenValues.nextValue = parseFloat(screen.textContent);
-    overheadScreen.textContent += screen.textContent + "=";
-    let { prevValue, nextValue, operationToDo } = screenValues;
-    const doTheOperation = matchOperator(operationToDo);
-    screen.textContent = doTheOperation(prevValue, nextValue);
-});
-
-function matchOperator(operator) {
-    switch (operator) {
-        case "+": {
-            return (a, b) => {
-                return a + b;
-            };
-        }
-        case "-": {
-            return (a, b) => {
-                return a - b;
-            };
-        }
-        case "x": {
-            return (a, b) => {
-                return a * b;
-            };
-        }
-        default: {
-            return (a, b) => {
-                return a / b;
-            };
-        }
-    }
-}
-
 function changeTheme(theme) {
     app.removeAttribute("class");
     app.classList.add("app");

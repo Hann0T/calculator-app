@@ -27,18 +27,51 @@ h3 {
     --key-background-third: hsl(6, 63%, 50%);
     --key-shadow-third: hsl(6, 70%, 34%);
 
+    --text-color-top: rgb(255, 255, 255);
+    --text-color-overHeadScreen: hsl(221, 14%, 31%);
     --text-color: rgb(255, 255, 255);
     --text-color-second: hsl(221, 14%, 31%);
+    --text-color-equal: rgb(255, 255, 255);
 }
 .theme-two {
     --main-background: hsl(0, 0%, 90%);
     --keypad-background: hsl(0, 5%, 81%);
     --screen-background: hsl(0, 0%, 93%);
+
+    --key-background: hsl(45, 7%, 89%);
+    --key-shadow: hsl(35, 11%, 61%);
+
+    --key-background-second: hsl(185, 42%, 37%);
+    --key-shadow-second: hsl(185, 58%, 25%);
+
+    --key-background-third: hsl(25, 98%, 40%);
+    --key-shadow-third: hsl(25, 99%, 27%);
+
+    --text-color-top: hsl(60, 10%, 19%);
+    --text-color-overHeadScreen: hsl(0, 3%, 64%);
+    --text-color: rgb(255, 255, 255);
+    --text-color-second: hsl(60, 10%, 19%);
+    --text-color-equal: rgb(255, 255, 255);
 }
 .theme-three {
     --main-background: hsl(268, 75%, 9%);
     --keypad-background: hsl(268, 71%, 12%);
     --screen-background: hsl(268, 71%, 12%);
+
+    --key-background-second: hsl(281, 89%, 26%);
+    --key-shadow-second: hsl(285, 91%, 52%);
+
+    --key-background-third: hsl(176, 100%, 44%);
+    --key-shadow-third: hsl(177, 92%, 70%);
+
+    --key-background: hsl(268, 47%, 21%);
+    --key-shadow: hsl(290, 70%, 36%);
+
+    --text-color-top: hsl(52, 100%, 62%);
+    --text-color-overHeadScreen: hsl(52, 62%, 27%);
+    --text-color: rgb(255, 255, 255);
+    --text-color-second: hsl(52, 100%, 62%);
+    --text-color-equal: hsl(198, 20%, 13%);
 }
 
 .app {
@@ -53,7 +86,7 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--text-color);
+    color: var(--text-color-top);
 }
 
 .calculator__theme {
@@ -68,9 +101,38 @@ h3 {
     justify-content: center;
     align-items: center;
 }
+.calculator__theme--switch > p {
+    box-sizing: border-box;
+    padding: 0 10px;
+    margin: 0;
+    margin: 1em 0 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
 
 #switcher {
-    max-width: 100px;
+    max-width: 70px;
+}
+input[type="range"] {
+    box-sizing: border-box;
+    padding: 5px 5px 6px;
+    width: 100%;
+    background-color: var(--keypad-background);
+    border-radius: 20px;
+    -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb,
+input[type="range"]::-moz-range-thumb {
+    height: 18px;
+    width: 18px;
+    background: var(--key-background-third);
+    box-shadow: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-appearance: none;
 }
 
 .calculator__screen--text-container {
@@ -90,12 +152,13 @@ h3 {
 }
 .calculator__screen--text {
     font-size: 40px;
+    color: var(--text-color-top);
 }
 .calculator__screen--overhead-text {
     position: absolute;
     top: 20px;
     right: 40px;
-    color: var(--text-color-second);
+    color: var(--text-color-overHeadScreen);
     font-size: 30px;
 }
 
@@ -134,6 +197,9 @@ h3 {
     color: var(--text-color);
     background-color: var(--key-background-third);
     box-shadow: 0 5px 0 var(--key-shadow-third);
+}
+.calculator__key--equal {
+    color: var(--text-color-equal);
 }
 .calculator__key--reset,
 .calculator__key--equal {
